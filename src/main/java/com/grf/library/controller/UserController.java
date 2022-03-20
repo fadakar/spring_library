@@ -42,8 +42,7 @@ public class UserController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public User store(@RequestBody User user) {
-        userRepo.save(user);
-        return user;
+        return userRepo.save(user);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")

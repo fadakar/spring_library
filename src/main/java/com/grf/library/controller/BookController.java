@@ -42,8 +42,7 @@ public class BookController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Book store(@RequestBody Book Book) {
-        bookRepo.save(Book);
-        return Book;
+        return bookRepo.save(Book);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")

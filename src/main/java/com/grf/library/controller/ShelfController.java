@@ -41,9 +41,8 @@ public class ShelfController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Shelf store(@RequestBody Shelf user) {
-        shelfRepo.save(user);
-        return user;
+    public Shelf store(@RequestBody Shelf shelf) {
+        return shelfRepo.save(shelf);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
