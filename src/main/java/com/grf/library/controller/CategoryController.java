@@ -1,6 +1,6 @@
 package com.grf.library.controller;
 
-import com.grf.library.dao.CategoryRepository;
+import com.grf.library.repositories.CategoryRepository;
 import com.grf.library.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

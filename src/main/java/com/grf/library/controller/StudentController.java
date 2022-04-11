@@ -1,6 +1,6 @@
 package com.grf.library.controller;
 
-import com.grf.library.dao.StudentRepository;
+import com.grf.library.repositories.StudentRepository;
 import com.grf.library.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

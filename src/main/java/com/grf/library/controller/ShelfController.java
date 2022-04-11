@@ -1,6 +1,6 @@
 package com.grf.library.controller;
 
-import com.grf.library.dao.ShelfRepository;
+import com.grf.library.repositories.ShelfRepository;
 import com.grf.library.entities.Shelf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;

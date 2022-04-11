@@ -1,6 +1,6 @@
 package com.grf.library.controller;
 
-import com.grf.library.dao.BookRepository;
+import com.grf.library.repositories.BookRepository;
 import com.grf.library.entities.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
