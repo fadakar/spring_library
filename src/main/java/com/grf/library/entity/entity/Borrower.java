@@ -11,19 +11,19 @@ public class Borrower {
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "borrower_student_id")
     private Student student;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "borrower_book_id")
     private Book book;
 
-    @Column(name = "from_date")
+    @Column(name = "borrower_from_date")
     private Date fromDate;
 
-    @Column(name = "to_date")
+    @Column(name = "borrower_to_date")
     private Date toDate; // time bargasht ya tamdid
 
-    @Column(name = "return_date")
+    @Column(name = "borrower_return_date")
     private Date ReturnDate; // rooz tahvil
 }

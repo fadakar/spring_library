@@ -10,19 +10,19 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "book_title", nullable = false)
     private String title;
 
-    @Column(name = "publication_year")
+    @Column(name = "book_publication_year")
     private String publicationYear;
 
-    @Column(name = "language", nullable = false)
+    @Column(name = "book_language", nullable = false)
     private String language;
 
-    @Column(name = "description")
+    @Column(name = "book_description")
     private String description;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book_book", fetch = FetchType.LAZY)
     private List<Borrower> borrowers;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -9,19 +9,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "user_username", nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "user_password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "user_email", nullable = false)
     private String email;
 
-    @Column(name = "is_admin", nullable = false)
+    @Column(name = "user_is_admin", nullable = false)
     private boolean isAdmin;
 
-    @Column(name = "description")
+    @Column(name = "user_description")
     private String description;
 
     public long getId() {

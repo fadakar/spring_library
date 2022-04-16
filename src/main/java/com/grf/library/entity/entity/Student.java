@@ -13,22 +13,22 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "student_first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "student_last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "birthday")
+    @Column(name = "student_birthday")
     private Date birthday;
 
-    @Column(name = "gender", nullable = false)
+    @Column(name = "student_gender", nullable = false)
     private int gender;
 
-    @Column(name = "cellphone", nullable = false)
+    @Column(name = "student_cellphone", nullable = false)
     private String cellphone;
 
-    @Column(name = "telephone")
+    @Column(name = "student_telephone")
     private String telephone;
 
     @JsonIgnore

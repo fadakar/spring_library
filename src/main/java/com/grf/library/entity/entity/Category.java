@@ -12,10 +12,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "category_title", nullable = false)
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "category_description")
     private String description;
 
     @JsonIgnore
