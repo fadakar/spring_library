@@ -1,4 +1,4 @@
-package com.grf.library.entities;
+package com.grf.library.entity.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

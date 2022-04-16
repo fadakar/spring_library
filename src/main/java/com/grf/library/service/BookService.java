@@ -1,6 +1,6 @@
-package com.grf.library.services;
+package com.grf.library.service;
 
-import com.grf.library.repositories.BookRepository;
+import com.grf.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

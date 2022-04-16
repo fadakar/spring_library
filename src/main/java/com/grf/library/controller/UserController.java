@@ -1,7 +1,7 @@
-package com.grf.library.controllers;
+package com.grf.library.controller;
 
-import com.grf.library.repositories.UserRepository;
-import com.grf.library.entities.User;
+import com.grf.library.repository.UserRepository;
+import com.grf.library.entity.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
