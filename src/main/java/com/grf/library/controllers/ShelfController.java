@@ -1,4 +1,4 @@
-package com.grf.library.controller;
+package com.grf.library.controllers;
 
 import com.grf.library.repositories.ShelfRepository;
 import com.grf.library.entities.Shelf;
