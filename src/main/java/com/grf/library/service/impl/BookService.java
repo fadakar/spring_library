@@ -1,4 +1,4 @@
-package com.grf.library.service;
+package com.grf.library.service.impl;
 
 import com.grf.library.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;

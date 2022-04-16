@@ -1,7 +1,7 @@
 package com.grf.library.controller;
 
 import com.grf.library.repository.BookRepository;
-import com.grf.library.entity.entity.Book;
+import com.grf.library.repository.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

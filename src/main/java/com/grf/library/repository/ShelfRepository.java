@@ -1,6 +1,6 @@
 package com.grf.library.repository;
 
-import com.grf.library.entity.entity.Shelf;
+import com.grf.library.repository.entity.Shelf;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
