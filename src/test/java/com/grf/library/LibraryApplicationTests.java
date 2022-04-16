@@ -1,13 +1,15 @@
 package com.grf.library;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LibraryApplicationTests {
+public class LibraryApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void contextLoads() {
+        Assert.assertEquals(2, 2);
     }
 
 }
