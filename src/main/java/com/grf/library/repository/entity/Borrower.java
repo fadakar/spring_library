@@ -3,12 +3,13 @@ package com.grf.library.repository.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "borrower")
 @Data
-public class Borrower {
+public class Borrower  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

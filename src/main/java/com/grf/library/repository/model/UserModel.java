@@ -3,8 +3,10 @@ package com.grf.library.repository.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class UserModel {
+public class UserModel implements Serializable {
     private long id;
     private String username;
     private String password;
