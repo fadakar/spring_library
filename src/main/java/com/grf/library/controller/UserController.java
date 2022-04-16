@@ -2,10 +2,12 @@ package com.grf.library.controller;
 
 import com.grf.library.repository.UserRepository;
 import com.grf.library.repository.entity.User;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +20,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+
     @GetMapping("")
-    public List<User> list() {
-        return userRepo.findAll();
+    public ResponseEntity list() {
+        return new ResponseEntity(userRepo.findAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "", params = {"page", "size"})
