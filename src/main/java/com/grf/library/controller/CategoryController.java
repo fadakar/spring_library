@@ -1,58 +1,45 @@
 package com.grf.library.controller;
 
-import com.grf.library.repository.CategoryRepository;
-import com.grf.library.repository.entity.Category;
+import com.grf.library.repository.model.CategoryModel;
+import com.grf.library.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/user")
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepo;
+    @Qualifier("categoryServiceImpl")
+    private CategoryService service;
 
     @GetMapping("")
-    public List<Category> list() {
-        return categoryRepo.findAll();
+    public ResponseEntity list() {
+        return new ResponseEntity(service.findAll(), HttpStatus.OK);
     }
-
-    @GetMapping(path = "", params = {"page", "size"})
-    public Iterable<Category> list(@RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable paging = PageRequest.of(page, size);
-        return categoryRepo.findAll(paging);
-    }
-
 
     @GetMapping("/{id}")
-    public Category show(@PathVariable long id) {
-        Optional<Category> found = categoryRepo.findById(id);
-        if (found.isPresent()) {
-            return found.get();
-        }
-        return null;
+    public ResponseEntity show(@PathVariable long id) {
+        CategoryModel model = service.getById(id);
+        return new ResponseEntity(model, HttpStatus.OK);
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Category store(@RequestBody Category category) {
-        return categoryRepo.save(category);
+    public ResponseEntity store(@RequestBody CategoryModel model) {
+        CategoryModel createdModel = service.save(model);
+        return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public Category update(@RequestBody Category patchCategory, @PathVariable long id) {
-        Optional<Category> found = categoryRepo.findById(id);
-        if (found.isPresent()) {
-            Category category = found.get();
-            category.setTitle(patchCategory.getTitle());
-            category.setDescription(patchCategory.getDescription());
-            return categoryRepo.save(category);
+    public ResponseEntity update(@RequestBody CategoryModel pathModel, @PathVariable long id) {
+        CategoryModel foundModel = service.getById(id);
+        if (foundModel != null) {
+            foundModel.setTitle(pathModel.getTitle());
+            foundModel.setDescription(pathModel.getDescription());
+            return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
         }
         return null;
     }
@@ -60,9 +47,9 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable long id) {
-        Optional<Category> found = categoryRepo.findById(id);
-        if (found.isPresent() && found.get().getId() == id) {
-            categoryRepo.deleteById(id);
+        CategoryModel foundModel = service.getById(id);
+        if (foundModel.getId() == id) {
+            service.deleteById(id);
         }
     }
 
