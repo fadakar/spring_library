@@ -1,62 +1,49 @@
 package com.grf.library.controller;
 
-import com.grf.library.repository.StudentRepository;
-import com.grf.library.repository.entity.Student;
+import com.grf.library.repository.model.StudentModel;
+import com.grf.library.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
 
     @Autowired
-    private StudentRepository studentRepo;
+    @Qualifier("studentServiceImpl")
+    private StudentService service;
 
     @GetMapping("")
-    public List<Student> list() {
-        return studentRepo.findAll();
+    public ResponseEntity list() {
+        return new ResponseEntity(service.findAll(), HttpStatus.OK);
     }
-
-    @GetMapping(path = "", params = {"page", "size"})
-    public Iterable<Student> list(@RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable paging = PageRequest.of(page, size);
-        return studentRepo.findAll(paging);
-    }
-
 
     @GetMapping("/{id}")
-    public Student show(@PathVariable long id) {
-        Optional<Student> found = studentRepo.findById(id);
-        if (found.isPresent()) {
-            return found.get();
-        }
-        return null;
+    public ResponseEntity show(@PathVariable long id) {
+        StudentModel model = service.getById(id);
+        return new ResponseEntity(model, HttpStatus.OK);
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Student store(@RequestBody Student student) {
-        return studentRepo.save(student);
+    public ResponseEntity store(@RequestBody StudentModel model) {
+        StudentModel createdModel = service.save(model);
+        return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public Student update(@RequestBody Student patchStudent, @PathVariable long id) {
-        Optional<Student> found = studentRepo.findById(id);
-        if (found.isPresent()) {
-            Student student = found.get();
-            student.setFirstName(patchStudent.getFirstName());
-            student.setLastName(patchStudent.getLastName());
-            student.setBirthday(patchStudent.getBirthday());
-            student.setCellphone(patchStudent.getCellphone());
-            student.setTelephone(patchStudent.getTelephone());
-            student.setGender(patchStudent.getGender());
-            return studentRepo.save(student);
+    public ResponseEntity update(@RequestBody StudentModel pathModel, @PathVariable long id) {
+        StudentModel foundModel = service.getById(id);
+        if (foundModel != null) {
+            foundModel.setFirstName(pathModel.getFirstName());
+            foundModel.setLastName(pathModel.getLastName());
+            foundModel.setBirthday(pathModel.getBirthday());
+            foundModel.setCellphone(pathModel.getCellphone());
+            foundModel.setTelephone(pathModel.getTelephone());
+            foundModel.setGender(pathModel.getGender());
+            return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
         }
         return null;
     }
@@ -64,9 +51,9 @@ public class StudentController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable long id) {
-        Optional<Student> found = studentRepo.findById(id);
-        if (found.isPresent() && found.get().getId() == id) {
-            studentRepo.deleteById(id);
+        StudentModel foundModel = service.getById(id);
+        if (foundModel.getId() == id) {
+            service.deleteById(id);
         }
     }
 
