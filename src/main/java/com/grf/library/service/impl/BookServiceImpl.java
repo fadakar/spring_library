@@ -41,8 +41,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookModel save(BookModel userModel) {
-        Book book = mapper.ModelToEntity(userModel);
+    public BookModel save(BookModel bookModel) {
+        Book book = mapper.ModelToEntity(bookModel);
         Book savedBook = repo.save(book);
         return mapper.EntityToModel(savedBook);
     }

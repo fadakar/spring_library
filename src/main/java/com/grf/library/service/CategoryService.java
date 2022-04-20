@@ -10,7 +10,7 @@ public interface CategoryService {
 
     CategoryModel getById(long id);
 
-    CategoryModel save(CategoryModel book);
+    CategoryModel save(CategoryModel categoryModel);
 
     void deleteById(long id);
 

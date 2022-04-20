@@ -10,7 +10,7 @@ public interface BorrowerService {
 
     BorrowerModel getById(long id);
 
-    BorrowerModel save(BorrowerModel book);
+    BorrowerModel save(BorrowerModel borrowerModel);
 
     void deleteById(long id);
 

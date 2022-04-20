@@ -10,7 +10,7 @@ public interface StudentService {
 
     StudentModel getById(long id);
 
-    StudentModel save(StudentModel book);
+    StudentModel save(StudentModel studentModel);
 
     void deleteById(long id);
 

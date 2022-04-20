@@ -41,8 +41,8 @@ public class BorrowerServiceImpl implements BorrowerService {
     }
 
     @Override
-    public BorrowerModel save(BorrowerModel userModel) {
-        Borrower borrower = mapper.ModelToEntity(userModel);
+    public BorrowerModel save(BorrowerModel borrowerModel) {
+        Borrower borrower = mapper.ModelToEntity(borrowerModel);
         Borrower saveBorrower = repo.save(borrower);
         return mapper.EntityToModel(saveBorrower);
     }

@@ -10,7 +10,7 @@ public interface ShelfService {
 
     ShelfModel getById(long id);
 
-    ShelfModel save(ShelfModel book);
+    ShelfModel save(ShelfModel shelfModel);
 
     void deleteById(long id);
 

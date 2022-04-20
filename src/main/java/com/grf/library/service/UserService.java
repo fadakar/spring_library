@@ -10,7 +10,7 @@ public interface UserService {
 
     UserModel getById(long id);
 
-    UserModel save(UserModel book);
+    UserModel save(UserModel userModel);
 
     void deleteById(long id);
 
