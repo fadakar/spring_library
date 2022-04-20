@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody UserModel userModel) {
-        UserModel createdModel = service.save(userModel);
+    public ResponseEntity store(@RequestBody UserModel model) {
+        UserModel createdModel = service.save(model);
         return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
