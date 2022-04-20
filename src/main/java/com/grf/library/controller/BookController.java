@@ -1,64 +1,50 @@
 package com.grf.library.controller;
 
-import com.grf.library.repository.BookRepository;
-import com.grf.library.repository.entity.Book;
+import com.grf.library.repository.model.BookModel;
+import com.grf.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/user")
 public class BookController {
 
     @Autowired
-    private BookRepository bookRepo;
+    @Qualifier("bookServiceImpl")
+    private BookService service;
 
     @GetMapping("")
     public ResponseEntity list() {
-        List<Book> books = bookRepo.findAll();
-        return new ResponseEntity(books, HttpStatus.OK);
+        return new ResponseEntity(service.findAll(), HttpStatus.OK);
     }
-
-    @GetMapping(path = "", params = {"page", "size"})
-    public Iterable<Book> list(@RequestParam("page") int page, @RequestParam("size") int size) {
-        Pageable paging = PageRequest.of(page, size);
-        return bookRepo.findAll(paging);
-    }
-
 
     @GetMapping("/{id}")
-    public Book show(@PathVariable long id) {
-        Optional<Book> found = bookRepo.findById(id);
-        if (found.isPresent()) {
-            return found.get();
-        }
-        return null;
+    public ResponseEntity show(@PathVariable long id) {
+        BookModel model = service.getById(id);
+        return new ResponseEntity(model, HttpStatus.OK);
     }
 
     @PostMapping("")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Book store(@RequestBody Book Book) {
-        return bookRepo.save(Book);
+    public ResponseEntity store(@RequestBody BookModel model) {
+        BookModel createdModel = service.save(model);
+        return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public Book update(@RequestBody Book patchBook, @PathVariable long id) {
-        Optional<Book> found = bookRepo.findById(id);
-        if (found.isPresent()) {
-            Book book = found.get();
-            book.setTitle(patchBook.getTitle());
-            book.setShelf(patchBook.getShelf());
-            book.setCategory(patchBook.getCategory());
-            book.setLanguage(patchBook.getLanguage());
-            book.setPublicationYear(patchBook.getPublicationYear());
-            book.setDescription(patchBook.getDescription());
-            return bookRepo.save(book);
+    public ResponseEntity update(@RequestBody BookModel pathModel, @PathVariable long id) {
+        BookModel foundModel = service.getById(id);
+        if (foundModel != null) {
+            foundModel.setTitle(pathModel.getTitle());
+            foundModel.setShelf(pathModel.getShelf());
+            foundModel.setCategory(pathModel.getCategory());
+            foundModel.setLanguage(pathModel.getLanguage());
+            foundModel.setPublicationYear(pathModel.getPublicationYear());
+            foundModel.setDescription(pathModel.getDescription());
+            foundModel.setDescription(pathModel.getDescription());
+            return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
         }
         return null;
     }
@@ -66,9 +52,9 @@ public class BookController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void destroy(@PathVariable long id) {
-        Optional<Book> found = bookRepo.findById(id);
-        if (found.isPresent() && found.get().getId() == id) {
-            bookRepo.deleteById(id);
+        BookModel foundModel = service.getById(id);
+        if (foundModel.getId() == id) {
+            service.deleteById(id);
         }
     }
 
