@@ -24,7 +24,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity show(@PathVariable long id) {
         UserModel model = service.getById(id);
-        return new ResponseEntity(model, HttpStatus.OK);
+        if (model != null) {
+            return new ResponseEntity(model, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("")
@@ -43,8 +47,9 @@ public class UserController {
             foundModel.setEmail(pathModel.getEmail());
             foundModel.setDescription(pathModel.getDescription());
             return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
         }
-        return null;
     }
 
     @DeleteMapping("/{id}")

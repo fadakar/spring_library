@@ -24,7 +24,11 @@ public class BookController {
     @GetMapping("/{id}")
     public ResponseEntity show(@PathVariable long id) {
         BookModel model = service.getById(id);
-        return new ResponseEntity(model, HttpStatus.OK);
+        if (model != null) {
+            return new ResponseEntity(model, HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("")
@@ -45,8 +49,9 @@ public class BookController {
             foundModel.setDescription(pathModel.getDescription());
             foundModel.setDescription(pathModel.getDescription());
             return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
+        } else {
+            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
         }
-        return null;
     }
 
     @DeleteMapping("/{id}")
