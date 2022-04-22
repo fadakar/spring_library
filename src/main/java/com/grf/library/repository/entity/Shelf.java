@@ -1,14 +1,18 @@
 package com.grf.library.repository.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "shelf")
-@Data
 public class Shelf implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
