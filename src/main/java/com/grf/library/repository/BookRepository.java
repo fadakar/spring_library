@@ -11,6 +11,4 @@ import java.util.List;
 @Transactional
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Override
-    List<Book> findAll();
 }

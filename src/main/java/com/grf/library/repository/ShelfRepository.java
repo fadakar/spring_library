@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface ShelfRepository extends JpaRepository<Shelf, Long> {
 
-    @Override
-    List<Shelf> findAll();
 }

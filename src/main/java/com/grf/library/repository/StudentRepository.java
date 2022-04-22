@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    @Override
-    List<Student> findAll();
 }

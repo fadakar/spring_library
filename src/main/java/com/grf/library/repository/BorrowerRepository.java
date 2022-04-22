@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface BorrowerRepository extends JpaRepository<Borrower, Long> {
 
-    @Override
-    List<Borrower> findAll();
 }
