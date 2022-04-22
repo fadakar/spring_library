@@ -3,12 +3,16 @@ package com.grf.library.repository.model;
 
 import com.grf.library.repository.entity.Book;
 import com.grf.library.repository.entity.Student;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BorrowerModel implements Serializable {
     private long id;
     private Student student;
