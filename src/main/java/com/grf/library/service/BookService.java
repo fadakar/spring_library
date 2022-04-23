@@ -15,4 +15,5 @@ public interface BookService {
 
     void deleteById(long id) throws BusinessException;
 
+    Object getStatus(long id) throws BusinessException;
 }

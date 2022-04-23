@@ -3,6 +3,7 @@ package com.grf.library.service.impl;
 import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.BookRepository;
 import com.grf.library.repository.entity.Book;
+import com.grf.library.repository.entity.Borrower;
 import com.grf.library.repository.mapper.BookMapper;
 import com.grf.library.repository.mapper.CategoryMapper;
 import com.grf.library.repository.mapper.ShelfMapper;
@@ -10,6 +11,7 @@ import com.grf.library.repository.model.BookModel;
 import com.grf.library.repository.model.CategoryModel;
 import com.grf.library.repository.model.ShelfModel;
 import com.grf.library.service.BookService;
+import com.grf.library.service.BorrowerService;
 import com.grf.library.service.CategoryService;
 import com.grf.library.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     BookRepository repo;
+
+    @Autowired
+    @Qualifier("borrowerServiceImpl")
+    BorrowerService borrowerService;
 
     @Autowired
     @Qualifier("shelfServiceImpl")
@@ -116,5 +122,21 @@ public class BookServiceImpl implements BookService {
             throw new BusinessException("An error occurs when delete Book");
         }
 
+    }
+
+    @Override
+    public Object getStatus(long bookId) throws BusinessException {
+        try {
+            Borrower borrower = this.borrowerService.getLastOpen(bookId);
+
+            if (borrower == null) {
+                BookModel bookModel = this.getById(bookId);
+                return bookModel.getShelf();
+            } else {
+                return borrower;
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when searching book status");
+        }
     }
 }

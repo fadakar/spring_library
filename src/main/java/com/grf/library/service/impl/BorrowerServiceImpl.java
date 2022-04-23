@@ -2,6 +2,7 @@ package com.grf.library.service.impl;
 
 import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.BorrowerRepository;
+import com.grf.library.repository.entity.Book;
 import com.grf.library.repository.entity.Borrower;
 import com.grf.library.repository.mapper.BorrowerMapper;
 import com.grf.library.repository.model.BorrowerModel;
@@ -50,27 +51,30 @@ public class BorrowerServiceImpl implements BorrowerService {
     }
 
     @Override
-    public BorrowerModel save(BorrowerModel borrowerModel) throws BusinessException{
-        try{
+    public BorrowerModel save(BorrowerModel borrowerModel) throws BusinessException {
+        try {
             Borrower borrower = mapper.ModelToEntity(borrowerModel);
             Borrower saveBorrower = repo.save(borrower);
             return mapper.EntityToModel(saveBorrower);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new BusinessException("An error occurs when save Borrower");
         }
     }
 
     @Override
-    public void deleteById(long id) throws BusinessException{
-        try{
+    public void deleteById(long id) throws BusinessException {
+        try {
             Borrower foundBook = repo.getById(id);
             if (foundBook != null) {
                 repo.deleteById(foundBook.getId());
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new BusinessException("An error occurs when delete Borrower");
         }
+    }
+
+    @Override
+    public Borrower getLastOpen(long bookId) throws BusinessException {
+        return this.repo.findLastOpen(bookId);
     }
 }

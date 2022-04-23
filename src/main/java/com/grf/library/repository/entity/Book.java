@@ -1,5 +1,6 @@
 package com.grf.library.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,8 @@ public class Book implements Serializable {
     @Column(name = "book_description")
     private String description;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Borrower> borrowers;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

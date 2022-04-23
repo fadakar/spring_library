@@ -28,7 +28,7 @@ public class BorrowerController {
         return null;
     }
 
-    @GetMapping("book/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity show(@PathVariable long id) throws BusinessException {
         // TODO show borrower status
 

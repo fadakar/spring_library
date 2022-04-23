@@ -32,7 +32,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> show(@PathVariable long id) throws BusinessException{
+    public ResponseEntity<Object> show(@PathVariable long id) throws BusinessException {
         BookModel model = service.getById(id);
         if (model != null) {
             return new ResponseEntity<Object>(model, HttpStatus.OK);
@@ -42,13 +42,13 @@ public class BookController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> store(@RequestBody BookModel model) throws BusinessException{
+    public ResponseEntity<Object> store(@RequestBody BookModel model) throws BusinessException {
         BookModel createdModel = service.save(model);
         return new ResponseEntity<Object>(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<Object> update(@RequestBody BookModel model, @PathVariable long id) throws BusinessException{
+    public ResponseEntity<Object> update(@RequestBody BookModel model, @PathVariable long id) throws BusinessException {
         BookModel foundModel = service.getById(id);
         if (foundModel != null) {
             model.setId(foundModel.getId());
@@ -60,12 +60,17 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable long id) throws BusinessException{
+    public void destroy(@PathVariable long id) throws BusinessException {
         BookModel foundModel = service.getById(id);
         if (foundModel.getId() == id) {
             service.deleteById(id);
         }
     }
 
+
+    @GetMapping("/{id}/status")
+    public ResponseEntity<Object> status(@PathVariable long id) throws BusinessException {
+        return new ResponseEntity<Object>(this.service.getStatus(id), HttpStatus.OK);
+    }
 
 }
