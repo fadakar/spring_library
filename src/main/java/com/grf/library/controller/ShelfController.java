@@ -18,36 +18,36 @@ public class ShelfController {
     private ShelfService service;
 
     @GetMapping("")
-    public ResponseEntity list() throws BusinessException {
-        return new ResponseEntity(service.findAll(), HttpStatus.OK);
+    public ResponseEntity<Object> list() throws BusinessException {
+        return new ResponseEntity<Object>(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable long id) throws BusinessException {
+    public ResponseEntity<Object> show(@PathVariable long id) throws BusinessException {
         ShelfModel model = service.getById(id);
         if (model != null) {
-            return new ResponseEntity(model, HttpStatus.OK);
+            return new ResponseEntity<Object>(model, HttpStatus.OK);
         } else {
-            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Not Found Shelf", HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody ShelfModel model) throws BusinessException {
+    public ResponseEntity<Object> store(@RequestBody ShelfModel model) throws BusinessException {
         ShelfModel createdModel = service.save(model);
-        return new ResponseEntity(createdModel, HttpStatus.CREATED);
+        return new ResponseEntity<Object>(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody ShelfModel pathModel, @PathVariable long id) throws BusinessException {
+    public ResponseEntity<Object> update(@RequestBody ShelfModel pathModel, @PathVariable long id) throws BusinessException {
         ShelfModel foundModel = service.getById(id);
         if (foundModel != null) {
             foundModel.setShelfNO(pathModel.getShelfNO());
             foundModel.setFloor(pathModel.getFloor());
             foundModel.setDescription(pathModel.getDescription());
-            return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
+            return new ResponseEntity<Object>(service.save(foundModel), HttpStatus.OK);
         } else {
-            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Not Found Shelf", HttpStatus.NOT_FOUND);
         }
     }
 

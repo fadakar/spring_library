@@ -27,34 +27,34 @@ public class BookController {
     private ShelfMapper shelfMapper;
 
     @GetMapping("")
-    public ResponseEntity list() throws BusinessException {
-        return new ResponseEntity(service.findAll(), HttpStatus.OK);
+    public ResponseEntity<Object> list() throws BusinessException {
+        return new ResponseEntity<Object>(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable long id) throws BusinessException{
+    public ResponseEntity<Object> show(@PathVariable long id) throws BusinessException{
         BookModel model = service.getById(id);
         if (model != null) {
-            return new ResponseEntity(model, HttpStatus.OK);
+            return new ResponseEntity<Object>(model, HttpStatus.OK);
         } else {
-            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Not Found Book", HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody BookModel model) throws BusinessException{
+    public ResponseEntity<Object> store(@RequestBody BookModel model) throws BusinessException{
         BookModel createdModel = service.save(model);
-        return new ResponseEntity(createdModel, HttpStatus.CREATED);
+        return new ResponseEntity<Object>(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody BookModel model, @PathVariable long id) throws BusinessException{
+    public ResponseEntity<Object> update(@RequestBody BookModel model, @PathVariable long id) throws BusinessException{
         BookModel foundModel = service.getById(id);
         if (foundModel != null) {
             model.setId(foundModel.getId());
-            return new ResponseEntity(service.save(model), HttpStatus.OK);
+            return new ResponseEntity<Object>(service.save(model), HttpStatus.OK);
         } else {
-            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Not Found Book", HttpStatus.NOT_FOUND);
         }
     }
 

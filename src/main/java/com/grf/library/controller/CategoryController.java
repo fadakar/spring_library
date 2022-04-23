@@ -18,35 +18,35 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("")
-    public ResponseEntity list() throws BusinessException {
-        return new ResponseEntity(service.findAll(), HttpStatus.OK);
+    public ResponseEntity<Object> list() throws BusinessException {
+        return new ResponseEntity<Object>(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable long id) throws BusinessException {
+    public ResponseEntity<Object> show(@PathVariable long id) throws BusinessException {
         CategoryModel model = service.getById(id);
         if (model != null) {
-            return new ResponseEntity(model, HttpStatus.OK);
+            return new ResponseEntity<Object>(model, HttpStatus.OK);
         } else {
-            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Not Found Category", HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody CategoryModel model) throws BusinessException {
+    public ResponseEntity<Object> store(@RequestBody CategoryModel model) throws BusinessException {
         CategoryModel createdModel = service.save(model);
-        return new ResponseEntity(createdModel, HttpStatus.CREATED);
+        return new ResponseEntity<Object>(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody CategoryModel pathModel, @PathVariable long id) throws BusinessException {
+    public ResponseEntity<Object> update(@RequestBody CategoryModel pathModel, @PathVariable long id) throws BusinessException {
         CategoryModel foundModel = service.getById(id);
         if (foundModel != null) {
             foundModel.setTitle(pathModel.getTitle());
             foundModel.setDescription(pathModel.getDescription());
-            return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
+            return new ResponseEntity<Object>(service.save(foundModel), HttpStatus.OK);
         } else {
-            return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
+            throw new BusinessException("Not Found Category", HttpStatus.NOT_FOUND);
         }
     }
 

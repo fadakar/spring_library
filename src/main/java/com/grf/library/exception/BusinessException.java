@@ -8,7 +8,7 @@ public class BusinessException extends Exception {
 
     public BusinessException(String message) {
         super(message);
-        this.httpStatus = HttpStatus.OK;
+        this.httpStatus = HttpStatus.BAD_REQUEST;
     }
 
     public BusinessException(String message, HttpStatus httpStatus) {
