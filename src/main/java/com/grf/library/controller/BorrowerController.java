@@ -3,6 +3,7 @@ package com.grf.library.controller;
 import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.mapper.BorrowerMapper;
 import com.grf.library.repository.model.BorrowerModel;
+import com.grf.library.service.BookService;
 import com.grf.library.service.BorrowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +18,10 @@ public class BorrowerController {
     @Autowired
     @Qualifier("borrowerServiceImpl")
     private BorrowerService service;
+
+    @Autowired
+    @Qualifier("bookServiceImpl")
+    BookService bookService;
 
     @Autowired
     private BorrowerMapper borrowerMapper;
@@ -65,7 +70,7 @@ public class BorrowerController {
 
     @GetMapping("/{id}/status")
     public ResponseEntity<Object> status(@PathVariable long id) throws BusinessException {
-        return new ResponseEntity<Object>(this.service.getStatus(id), HttpStatus.OK);
+        return new ResponseEntity<Object>(this.bookService.getStatus(id), HttpStatus.OK);
     }
 
 }

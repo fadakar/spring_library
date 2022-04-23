@@ -2,7 +2,6 @@ package com.grf.library.service.impl;
 
 import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.BorrowerRepository;
-import com.grf.library.repository.entity.Book;
 import com.grf.library.repository.entity.Borrower;
 import com.grf.library.repository.mapper.BorrowerMapper;
 import com.grf.library.repository.model.BorrowerModel;
@@ -73,8 +72,7 @@ public class BorrowerServiceImpl implements BorrowerService {
         }
     }
 
-    @Override
-    public Object getStatus(long bookId) {
+    public Borrower getLastOpen(long bookId) throws BusinessException {
         return this.repo.findLastOpen(bookId);
     }
 }

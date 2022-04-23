@@ -1,7 +1,6 @@
 package com.grf.library.service;
 
 import com.grf.library.exception.BusinessException;
-import com.grf.library.repository.entity.Book;
 import com.grf.library.repository.entity.Borrower;
 import com.grf.library.repository.model.BorrowerModel;
 
@@ -17,5 +16,5 @@ public interface BorrowerService {
 
     void deleteById(long id) throws BusinessException;
 
-    Object getStatus(long bookId) throws BusinessException;
+    Borrower getLastOpen(long bookId) throws BusinessException;
 }

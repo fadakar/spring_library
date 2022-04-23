@@ -127,10 +127,12 @@ public class BookServiceImpl implements BookService {
     @Override
     public Object getStatus(long bookId) throws BusinessException {
         try {
+            BookModel bookModel = this.getById(bookId);
             Borrower borrower = this.borrowerService.getLastOpen(bookId);
 
-            if (borrower == null) {
-                BookModel bookModel = this.getById(bookId);
+            if (bookModel == null) {
+                throw new BusinessException("Book not found");
+            } else if (borrower == null) {
                 return bookModel.getShelf();
             } else {
                 return borrower;
@@ -139,4 +141,5 @@ public class BookServiceImpl implements BookService {
             throw new BusinessException("An error occurs when searching book status");
         }
     }
+
 }

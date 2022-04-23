@@ -13,9 +13,6 @@ import java.util.List;
 @Transactional
 public interface BorrowerRepository extends JpaRepository<Borrower, Long> {
 
-//    Borrower findByBookAndReturnDateIsNull(Book book);
-//    Borrower findBorrowerByBook_IdAndReturnDateIsNull(long bookId);
-
     @Query("select t from Borrower t where t.book.id = :bookId and t.ReturnDate is null")
     Borrower findLastOpen(long bookId);
 }
