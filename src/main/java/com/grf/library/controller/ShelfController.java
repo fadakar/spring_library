@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/shelf")
-@ControllerAdvice
 public class ShelfController {
 
     @Autowired
