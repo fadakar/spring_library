@@ -1,8 +1,8 @@
 package com.grf.library.controller;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.mapper.ShelfMapper;
 import com.grf.library.repository.model.BookModel;
-import com.grf.library.repository.model.ShelfModel;
 import com.grf.library.service.BookService;
 import com.grf.library.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ public class BookController {
     private ShelfMapper shelfMapper;
 
     @GetMapping("")
-    public ResponseEntity list() {
+    public ResponseEntity list() throws BusinessException {
         return new ResponseEntity(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable long id) {
+    public ResponseEntity show(@PathVariable long id) throws BusinessException{
         BookModel model = service.getById(id);
         if (model != null) {
             return new ResponseEntity(model, HttpStatus.OK);
@@ -42,13 +42,13 @@ public class BookController {
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody BookModel model) {
+    public ResponseEntity store(@RequestBody BookModel model) throws BusinessException{
         BookModel createdModel = service.save(model);
         return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody BookModel model, @PathVariable long id) {
+    public ResponseEntity update(@RequestBody BookModel model, @PathVariable long id) throws BusinessException{
         BookModel foundModel = service.getById(id);
         if (foundModel != null) {
             model.setId(foundModel.getId());
@@ -60,7 +60,7 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable long id) {
+    public void destroy(@PathVariable long id) throws BusinessException{
         BookModel foundModel = service.getById(id);
         if (foundModel.getId() == id) {
             service.deleteById(id);

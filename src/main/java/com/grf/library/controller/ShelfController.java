@@ -1,5 +1,6 @@
 package com.grf.library.controller;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.model.ShelfModel;
 import com.grf.library.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/shelf")
+@ControllerAdvice
 public class ShelfController {
 
     @Autowired
@@ -17,12 +19,12 @@ public class ShelfController {
     private ShelfService service;
 
     @GetMapping("")
-    public ResponseEntity list() {
+    public ResponseEntity list() throws BusinessException {
         return new ResponseEntity(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable long id) {
+    public ResponseEntity show(@PathVariable long id) throws BusinessException {
         ShelfModel model = service.getById(id);
         if (model != null) {
             return new ResponseEntity(model, HttpStatus.OK);
@@ -32,13 +34,13 @@ public class ShelfController {
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody ShelfModel model) {
+    public ResponseEntity store(@RequestBody ShelfModel model) throws BusinessException {
         ShelfModel createdModel = service.save(model);
         return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody ShelfModel pathModel, @PathVariable long id) {
+    public ResponseEntity update(@RequestBody ShelfModel pathModel, @PathVariable long id) throws BusinessException {
         ShelfModel foundModel = service.getById(id);
         if (foundModel != null) {
             foundModel.setShelfNO(pathModel.getShelfNO());
@@ -52,7 +54,7 @@ public class ShelfController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable long id) {
+    public void destroy(@PathVariable long id) throws BusinessException {
         ShelfModel foundModel = service.getById(id);
         if (foundModel.getId() == id) {
             service.deleteById(id);

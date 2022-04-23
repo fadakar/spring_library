@@ -1,5 +1,6 @@
 package com.grf.library.controller;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.model.StudentModel;
 import com.grf.library.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,12 @@ public class StudentController {
     private StudentService service;
 
     @GetMapping("")
-    public ResponseEntity list() {
+    public ResponseEntity list() throws BusinessException {
         return new ResponseEntity(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable long id) {
+    public ResponseEntity show(@PathVariable long id) throws BusinessException {
         StudentModel model = service.getById(id);
         if (model != null) {
             return new ResponseEntity(model, HttpStatus.OK);
@@ -32,13 +33,13 @@ public class StudentController {
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestBody StudentModel model) {
+    public ResponseEntity store(@RequestBody StudentModel model) throws BusinessException {
         StudentModel createdModel = service.save(model);
         return new ResponseEntity(createdModel, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody StudentModel pathModel, @PathVariable long id) {
+    public ResponseEntity update(@RequestBody StudentModel pathModel, @PathVariable long id) throws BusinessException{
         StudentModel foundModel = service.getById(id);
         if (foundModel != null) {
             foundModel.setFirstName(pathModel.getFirstName());
@@ -55,7 +56,7 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable long id) {
+    public void destroy(@PathVariable long id) throws BusinessException {
         StudentModel foundModel = service.getById(id);
         if (foundModel.getId() == id) {
             service.deleteById(id);

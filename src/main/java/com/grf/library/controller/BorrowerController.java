@@ -1,7 +1,9 @@
 package com.grf.library.controller;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.mapper.BorrowerMapper;
 import com.grf.library.repository.model.BookModel;
+import com.grf.library.repository.model.BorrowerModel;
 import com.grf.library.service.BorrowerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,7 +29,7 @@ public class BorrowerController {
     }
 
     @GetMapping("book/{id}")
-    public ResponseEntity show(@PathVariable long id) {
+    public ResponseEntity show(@PathVariable long id) throws BusinessException {
         // TODO show borrower status
 
         // namayesh vaziyat book ke dar ketab khane hast ya dar student
@@ -44,7 +46,7 @@ public class BorrowerController {
     }
 
     @PostMapping("")
-    public ResponseEntity store(@RequestParam("bookId") long bookId, @RequestParam("studentId") long studentId) {
+    public ResponseEntity store(@RequestBody BorrowerModel borrowerModel) throws BusinessException{
         // TODO insert borrower
 
         // student ra be book vasl mikonim ba insert new borrower record
@@ -54,7 +56,7 @@ public class BorrowerController {
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody BookModel model, @PathVariable long id) {
+    public ResponseEntity update(@RequestBody BookModel model, @PathVariable long id) throws BusinessException{
         // TODO update borrower
 
 //        BookModel foundModel = service.getById(id);
@@ -69,7 +71,7 @@ public class BorrowerController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable long id) {
+    public void destroy(@PathVariable long id) throws BusinessException {
         // TODO delete borrower
 //        BookModel foundModel = service.getById(id);
 //        if (foundModel.getId() == id) {
