@@ -1,6 +1,7 @@
 package com.grf.library.repository.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grf.library.repository.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

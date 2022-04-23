@@ -1,5 +1,6 @@
 package com.grf.library.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Shelf implements Serializable {
     @Column(name = "shelf_description")
     private String description;
 
-    @OneToMany(mappedBy = "shelf", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "shelf")
     private List<Book> books;
 }

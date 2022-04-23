@@ -3,9 +3,13 @@ package com.grf.library.service.impl;
 import com.grf.library.repository.BookRepository;
 import com.grf.library.repository.entity.Book;
 import com.grf.library.repository.mapper.BookMapper;
+import com.grf.library.repository.mapper.ShelfMapper;
 import com.grf.library.repository.model.BookModel;
+import com.grf.library.repository.model.ShelfModel;
 import com.grf.library.service.BookService;
+import com.grf.library.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +20,13 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     BookRepository repo;
+
+    @Autowired
+    @Qualifier("shelfServiceImpl")
+    ShelfService shelfService;
+
+    @Autowired
+    ShelfMapper shelfMapper;
 
     @Autowired
     BookMapper mapper;
@@ -43,6 +54,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookModel save(BookModel bookModel) {
         Book book = mapper.ModelToEntity(bookModel);
+        if (book.getShelf().getId() != bookModel.getShelf().getId()) {
+            ShelfModel shelfModel = shelfService.getById(bookModel.getShelf().getId());
+            bookModel.setShelf(shelfMapper.ModelToEntity(shelfModel));
+        }
         Book savedBook = repo.save(book);
         return mapper.EntityToModel(savedBook);
     }

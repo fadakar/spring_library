@@ -1,7 +1,10 @@
 package com.grf.library.controller;
 
+import com.grf.library.repository.mapper.ShelfMapper;
 import com.grf.library.repository.model.BookModel;
+import com.grf.library.repository.model.ShelfModel;
 import com.grf.library.service.BookService;
+import com.grf.library.service.ShelfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,13 @@ public class BookController {
     @Autowired
     @Qualifier("bookServiceImpl")
     private BookService service;
+
+    @Autowired
+    @Qualifier("shelfServiceImpl")
+    private ShelfService shelfService;
+
+    @Autowired
+    private ShelfMapper shelfMapper;
 
     @GetMapping("")
     public ResponseEntity list() {
@@ -38,17 +48,11 @@ public class BookController {
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity update(@RequestBody BookModel pathModel, @PathVariable long id) {
+    public ResponseEntity update(@RequestBody BookModel model, @PathVariable long id) {
         BookModel foundModel = service.getById(id);
         if (foundModel != null) {
-            foundModel.setTitle(pathModel.getTitle());
-            foundModel.setShelf(pathModel.getShelf());
-            foundModel.setCategory(pathModel.getCategory());
-            foundModel.setLanguage(pathModel.getLanguage());
-            foundModel.setPublicationYear(pathModel.getPublicationYear());
-            foundModel.setDescription(pathModel.getDescription());
-            foundModel.setDescription(pathModel.getDescription());
-            return new ResponseEntity(service.save(foundModel), HttpStatus.OK);
+            model.setId(foundModel.getId());
+            return new ResponseEntity(service.save(model), HttpStatus.OK);
         } else {
             return new ResponseEntity("Not Found Resource", HttpStatus.NOT_FOUND);
         }

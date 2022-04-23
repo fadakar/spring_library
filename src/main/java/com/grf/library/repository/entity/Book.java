@@ -31,14 +31,14 @@ public class Book implements Serializable {
     @Column(name = "book_description")
     private String description;
 
-    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private List<Borrower> borrowers;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "shelf_id")
     private Shelf shelf;
 }
