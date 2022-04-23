@@ -19,15 +19,14 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "category_title", nullable = false)
+    @Column(name = "category_title")
     private String title;
 
     @Column(name = "category_description")
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Book> books;
-
 
 }
