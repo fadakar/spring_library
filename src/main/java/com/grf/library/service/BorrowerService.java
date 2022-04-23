@@ -17,5 +17,5 @@ public interface BorrowerService {
 
     void deleteById(long id) throws BusinessException;
 
-    Borrower getLastOpen(long bookId) throws BusinessException;
+    Object getStatus(long bookId) throws BusinessException;
 }

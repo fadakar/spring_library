@@ -67,10 +67,4 @@ public class BookController {
         }
     }
 
-
-    @GetMapping("/{id}/status")
-    public ResponseEntity<Object> status(@PathVariable long id) throws BusinessException {
-        return new ResponseEntity<Object>(this.service.getStatus(id), HttpStatus.OK);
-    }
-
 }

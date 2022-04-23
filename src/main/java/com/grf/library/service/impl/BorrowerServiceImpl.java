@@ -74,7 +74,7 @@ public class BorrowerServiceImpl implements BorrowerService {
     }
 
     @Override
-    public Borrower getLastOpen(long bookId) throws BusinessException {
+    public Object getStatus(long bookId) {
         return this.repo.findLastOpen(bookId);
     }
 }
