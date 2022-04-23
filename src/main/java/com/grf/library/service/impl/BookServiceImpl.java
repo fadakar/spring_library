@@ -1,5 +1,6 @@
 package com.grf.library.service.impl;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.BookRepository;
 import com.grf.library.repository.entity.Book;
 import com.grf.library.repository.mapper.BookMapper;
@@ -42,45 +43,78 @@ public class BookServiceImpl implements BookService {
     BookMapper mapper;
 
     @Override
-    public List<BookModel> findAll() {
-        List<Book> books = repo.findAll();
-        List<BookModel> bookModels = new ArrayList<>();
-        for (Book book : books) {
-            bookModels.add(mapper.EntityToModel(book));
-        }
-        return bookModels;
-    }
+    public List<BookModel> findAll() throws BusinessException {
+        try {
 
-    @Override
-    public BookModel getById(long id) {
-        Book book = repo.getById(id);
-        if (book != null) {
-            return mapper.EntityToModel(book);
-        } else {
-            return null;
+            List<Book> books = repo.findAll();
+            List<BookModel> bookModels = new ArrayList<>();
+            for (Book book : books) {
+                bookModels.add(mapper.EntityToModel(book));
+            }
+            return bookModels;
+        } catch (Exception ex) {
+            throw new BusinessException("Book Not Found");
         }
     }
 
     @Override
-    public BookModel save(BookModel bookModel) {
+    public BookModel getById(long id) throws BusinessException {
+        try {
+            Book book = repo.getById(id);
+            if (book != null) {
+                return mapper.EntityToModel(book);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("Book Not Found");
+        }
+    }
+
+    @Override
+    public BookModel save(BookModel bookModel) throws BusinessException {
         Book book = mapper.ModelToEntity(bookModel);
+
         // set shelf
-        ShelfModel shelfModel = shelfService.getById(bookModel.getShelf().getId());
-        bookModel.setShelf(shelfMapper.ModelToEntity(shelfModel));
+        if (bookModel.getShelf() != null) {
+            try {
+                ShelfModel shelfModel = shelfService.getById(bookModel.getShelf().getId());
+                bookModel.setShelf(shelfMapper.ModelToEntity(shelfModel));
+            } catch (Exception ex) {
+                throw new BusinessException("Self Not Found");
+            }
+
+        }
 
         //set category
-        CategoryModel categoryModel = categoryService.getById(bookModel.getCategory().getId());
-        bookModel.setCategory(categoryMapper.ModelToEntity(categoryModel));
+        if (bookModel.getCategory() != null) {
+            try {
+                CategoryModel categoryModel = categoryService.getById(bookModel.getCategory().getId());
+                bookModel.setCategory(categoryMapper.ModelToEntity(categoryModel));
+            } catch (Exception ex) {
+                throw new BusinessException("Category Not Found");
+            }
+        }
 
-        Book savedBook = repo.save(book);
-        return mapper.EntityToModel(savedBook);
+
+        try {
+            Book savedBook = repo.save(book);
+            return mapper.EntityToModel(savedBook);
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when save Book");
+        }
     }
 
     @Override
-    public void deleteById(long id) {
-        Book foundBook = repo.getById(id);
-        if (foundBook != null) {
-            repo.deleteById(foundBook.getId());
+    public void deleteById(long id) throws BusinessException {
+        try {
+            Book foundBook = repo.getById(id);
+            if (foundBook != null) {
+                repo.deleteById(foundBook.getId());
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when delete Book");
         }
+
     }
 }

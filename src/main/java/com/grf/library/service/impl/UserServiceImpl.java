@@ -1,5 +1,6 @@
 package com.grf.library.service.impl;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.UserRepository;
 import com.grf.library.repository.entity.User;
 import com.grf.library.repository.mapper.UserMapper;
@@ -21,37 +22,57 @@ public class UserServiceImpl implements UserService {
     UserMapper mapper;
 
     @Override
-    public List<UserModel> findAll() {
-        List<User> users = repo.findAll();
-        List<UserModel> userModels = new ArrayList<>();
-        for (User user : users) {
-            userModels.add(mapper.EntityToModel(user));
+    public List<UserModel> findAll() throws BusinessException{
+        try{
+            List<User> users = repo.findAll();
+            List<UserModel> userModels = new ArrayList<>();
+            for (User user : users) {
+                userModels.add(mapper.EntityToModel(user));
+            }
+            return userModels;
         }
-        return userModels;
-    }
-
-    @Override
-    public UserModel getById(long id) {
-        User user = repo.getById(id);
-        if (user != null) {
-            return mapper.EntityToModel(user);
-        } else {
-            return null;
+        catch (Exception ex) {
+            throw new BusinessException("User Not Found");
         }
     }
 
     @Override
-    public UserModel save(UserModel userModel) {
-        User user = mapper.ModelToEntity(userModel);
-        User savedUser = repo.save(user);
-        return mapper.EntityToModel(savedUser);
+    public UserModel getById(long id) throws BusinessException {
+        try {
+            User user = repo.getById(id);
+            if (user != null) {
+                return mapper.EntityToModel(user);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("User Not Found");
+        }
+
     }
 
     @Override
-    public void deleteById(long id) {
-        User foundUser = repo.getById(id);
-        if (foundUser != null) {
-            repo.deleteById(foundUser.getId());
+    public UserModel save(UserModel userModel) throws BusinessException {
+        try {
+            User user = mapper.ModelToEntity(userModel);
+            User savedUser = repo.save(user);
+            return mapper.EntityToModel(savedUser);
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when save user");
         }
+
+    }
+
+    @Override
+    public void deleteById(long id) throws BusinessException {
+        try {
+            User foundUser = repo.getById(id);
+            if (foundUser != null) {
+                repo.deleteById(foundUser.getId());
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when delete user");
+        }
+
     }
 }

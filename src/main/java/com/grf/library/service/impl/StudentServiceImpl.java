@@ -1,5 +1,6 @@
 package com.grf.library.service.impl;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.StudentRepository;
 import com.grf.library.repository.entity.Student;
 import com.grf.library.repository.mapper.StudentMapper;
@@ -21,37 +22,58 @@ public class StudentServiceImpl implements StudentService {
     StudentMapper mapper;
 
     @Override
-    public List<StudentModel> findAll() {
-        List<Student> students = repo.findAll();
-        List<StudentModel> studentModels = new ArrayList<>();
-        for (Student student : students) {
-            studentModels.add(mapper.EntityToModel(student));
+    public List<StudentModel> findAll() throws BusinessException {
+        try {
+            List<Student> students = repo.findAll();
+            List<StudentModel> studentModels = new ArrayList<>();
+            for (Student student : students) {
+                studentModels.add(mapper.EntityToModel(student));
+            }
+            return studentModels;
+        } catch (Exception ex) {
+            throw new BusinessException("Student Not Found");
         }
-        return studentModels;
+
     }
 
     @Override
-    public StudentModel getById(long id) {
-        Student student = repo.getById(id);
-        if (student != null) {
-            return mapper.EntityToModel(student);
-        } else {
-            return null;
+    public StudentModel getById(long id) throws BusinessException {
+        try {
+            Student student = repo.getById(id);
+            if (student != null) {
+                return mapper.EntityToModel(student);
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("Student Not Found");
         }
+
     }
 
     @Override
-    public StudentModel save(StudentModel studentModel) {
-        Student student = mapper.ModelToEntity(studentModel);
-        Student savedStudent = repo.save(student);
-        return mapper.EntityToModel(savedStudent);
+    public StudentModel save(StudentModel studentModel) throws BusinessException {
+        try {
+            Student student = mapper.ModelToEntity(studentModel);
+            Student savedStudent = repo.save(student);
+            return mapper.EntityToModel(savedStudent);
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when save student");
+        }
+
+
     }
 
     @Override
-    public void deleteById(long id) {
-        Student foundStudent = repo.getById(id);
-        if (foundStudent != null) {
-            repo.deleteById(foundStudent.getId());
+    public void deleteById(long id) throws BusinessException {
+        try {
+            Student foundStudent = repo.getById(id);
+            if (foundStudent != null) {
+                repo.deleteById(foundStudent.getId());
+            }
+        } catch (Exception ex) {
+            throw new BusinessException("An error occurs when delete student");
         }
+
     }
 }

@@ -1,17 +1,18 @@
 package com.grf.library.service;
 
+import com.grf.library.exception.BusinessException;
 import com.grf.library.repository.model.BookModel;
 
 import java.util.List;
 
 public interface BookService {
 
-    List<BookModel> findAll();
+    List<BookModel> findAll() throws BusinessException;
 
-    BookModel getById(long id);
+    BookModel getById(long id) throws BusinessException;
 
-    BookModel save(BookModel book);
+    BookModel save(BookModel book) throws BusinessException;
 
-    void deleteById(long id);
+    void deleteById(long id) throws BusinessException;
 
 }
