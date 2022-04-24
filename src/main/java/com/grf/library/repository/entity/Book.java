@@ -33,7 +33,7 @@ public class Book implements Serializable {
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Borrower> borrowers;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

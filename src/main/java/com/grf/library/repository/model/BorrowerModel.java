@@ -15,8 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class BorrowerModel implements Serializable {
     private long id;
-    private Student student;
-    private Book book;
+    private StudentModel student;
+    private BookModel book;
     private Date fromDate;
     private Date toDate; // time bargasht ya tamdid
     private Date ReturnDate; // rooz tahvil

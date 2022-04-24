@@ -1,6 +1,7 @@
 package com.grf.library.repository.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grf.library.repository.entity.Borrower;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,7 @@ public class StudentModel implements Serializable {
     private int gender;
     private String cellphone;
     private String telephone;
-    private List<Borrower> borrowers;
+
+    @JsonIgnore
+    private List<BorrowerModel> borrowers;
 }

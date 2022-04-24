@@ -1,6 +1,7 @@
 package com.grf.library.repository.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grf.library.repository.entity.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +17,7 @@ public class CategoryModel implements Serializable {
     private long id;
     private String title;
     private String description;
-    private List<Book> books;
+
+    @JsonIgnore
+    private List<BookModel> books;
 }

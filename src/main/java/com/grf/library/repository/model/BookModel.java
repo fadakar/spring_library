@@ -19,7 +19,10 @@ public class BookModel implements Serializable {
     private String publicationYear;
     private String language;
     private String description;
-    private List<Borrower> borrowers;
+
+    @JsonIgnore
+    private List<BorrowerModel> borrowers;
+
     private Category category;
     private Shelf shelf;
 }

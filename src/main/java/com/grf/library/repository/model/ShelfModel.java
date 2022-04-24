@@ -19,5 +19,6 @@ public class ShelfModel implements Serializable {
     private int shelfNO;
     private String description;
 
-    private List<Book> books;
+    @JsonIgnore
+    private List<BookModel> books;
 }
