@@ -26,6 +26,24 @@
 					"response": []
 				},
 				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete",
 					"request": {
 						"method": "DELETE",
@@ -113,6 +131,24 @@
 							],
 							"path": [
 								"shelf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/shelf/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"shelf",
+								"1"
 							]
 						}
 					},
@@ -212,6 +248,24 @@
 					"response": []
 				},
 				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/student/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"student",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete",
 					"request": {
 						"method": "DELETE",
@@ -305,6 +359,24 @@
 					"response": []
 				},
 				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete",
 					"request": {
 						"method": "DELETE",
@@ -378,6 +450,136 @@
 			]
 		},
 		{
+			"name": "borrower",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/borrower",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"borrower"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/borrower/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"borrower",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/borrower/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"borrower",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/borrower/1/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"borrower",
+								"1",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"book\": {\r\n        \"id\": 1\r\n    },\r\n    \"student\": {\r\n        \"id\": 1\r\n    },\r\n    \"fromDate\": \"2022-03-22 12:00:00\",\r\n    \"toDate\": \"2022-03-28 12:00:00\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/borrower",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"borrower"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"book\": {\r\n        \"id\": 1\r\n    },\r\n    \"student\": {\r\n        \"id\": 1\r\n    },\r\n    \"fromDate\": \"2021-02-22 12:00:00\",\r\n    \"toDate\": \"2021-02-28 12:00:00\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/borrower/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"borrower",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "book",
 			"item": [
 				{
@@ -398,19 +600,18 @@
 					"response": []
 				},
 				{
-					"name": "get status",
+					"name": "show",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/book/1/status",
+							"raw": "{{baseUrl}}/book/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"book",
-								"1",
-								"status"
+								"1"
 							]
 						}
 					},
