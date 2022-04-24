@@ -70,7 +70,7 @@ public class BookServiceImpl implements BookService {
             if (book != null) {
                 return mapper.EntityToModel(book);
             } else {
-                return null;
+                throw new BusinessException("Book Not Found");
             }
         } catch (Exception ex) {
             throw new BusinessException("Book Not Found");
